@@ -1,0 +1,64 @@
+/* Uses only variables from roots.css. Declares none. */
+
+.theme-toggle {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.theme-toggle__legend {
+  margin-bottom: var(--space-2);
+  padding: 0;
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.theme-toggle__options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+.theme-toggle__option {
+  display: block;
+  min-width: 0;
+  cursor: pointer;
+}
+
+/* The real radio stays in the page for keyboard and screen readers */
+.theme-toggle__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+.theme-toggle__box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  min-height: 3.5rem;
+  padding: var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: center;
+}
+.theme-toggle__input:checked + .theme-toggle__box {
+  border-color: var(--primary);
+  background: var(--primary-tint);
+  color: var(--primary-text, var(--primary));
+}
+.theme-toggle__input:focus-visible + .theme-toggle__box {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.theme-toggle__hint {
+  margin: var(--space-2) 0 0;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}

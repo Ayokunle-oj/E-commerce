@@ -1,0 +1,163 @@
+/* Uses only variables from roots.css. Declares none. */
+
+/* Glass bar: translucent surface + blur, so the page shows softly through it */
+.bottom-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--z-nav);
+  padding: var(--space-1) var(--space-3)
+    calc(var(--space-1) + env(safe-area-inset-bottom, 0px));
+  background: var(--surface); /* fallback for older browsers */
+  background: color-mix(in srgb, var(--surface) 78%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  backdrop-filter: blur(18px) saturate(160%);
+  border-top: 1px solid color-mix(in srgb, var(--surface) 55%, var(--border));
+}
+/* No blur support: use a solid bar so the icons stay readable */
+@supports not (
+  (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+) {
+  .bottom-nav {
+    background: var(--surface);
+  }
+}
+/* Respect the phone's "reduce transparency" setting */
+@media (prefers-reduced-transparency: reduce) {
+  .bottom-nav {
+    background: var(--surface);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+/* Four equal columns: icon on top, name underneath */
+.bottom-nav__track {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  height: 48px;
+}
+
+.bottom-nav__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-width: 0;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+.bottom-nav__item--active {
+  color: var(--primary);
+}
+
+.bottom-nav__label {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+.bottom-nav__item--active .bottom-nav__label {
+  font-weight: 700;
+}
+
+.bottom-nav__icon-wrap {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+.bottom-nav__item--active .bottom-nav__icon-wrap {
+  transform: scale(1.08);
+}
+
+/* The glow: a soft blurred halo behind the active icon (opacity + scale only) */
+.bottom-nav__icon-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  border-radius: 50%;
+  background: var(--primary);
+  filter: blur(9px);
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    opacity var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+.bottom-nav__item--active .bottom-nav__icon-wrap::before {
+  opacity: 0.45;
+  transform: scale(1);
+}
+
+/* Profile picture (or initials) in the Account tab when logged in */
+.bottom-nav__avatar {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  overflow: hidden;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--primary-tint);
+  color: var(--primary);
+  font-size: 0.625rem;
+  font-weight: 700;
+  line-height: 1;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+.bottom-nav__avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.bottom-nav__item--active .bottom-nav__avatar {
+  border-color: var(--primary);
+}
+
+/* Badges: a ring in the bar color keeps them clean on top of the icon */
+.bottom-nav__badge {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--surface);
+  border-radius: var(--radius-pill);
+  font-size: 0.625rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.bottom-nav__badge--cart {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+.bottom-nav__badge--alert {
+  background: var(--error);
+  color: var(--on-error, white);
+}
+
+/* Mobile only. From 768px up, the top navbar takes over. */
+@media (min-width: 768px) {
+  .bottom-nav {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bottom-nav__item,
+  .bottom-nav__icon-wrap,
+  .bottom-nav__icon-wrap::before,
+  .bottom-nav__avatar {
+    transition: none;
+  }
+}

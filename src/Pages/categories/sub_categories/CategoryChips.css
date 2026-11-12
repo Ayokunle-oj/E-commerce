@@ -1,0 +1,42 @@
+/* Uses only variables from roots.css. Declares none. */
+
+.category-chips {
+  display: flex;
+  gap: var(--space-2);
+  padding: 0 var(--space-4) var(--space-1);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.category-chips::-webkit-scrollbar {
+  display: none;
+}
+
+.category-chips__chip {
+  flex: none;
+  min-height: 40px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+.category-chips__chip[aria-pressed="true"] {
+  border-color: var(--primary);
+  background: var(--primary-tint);
+  color: var(--primary-text, var(--primary));
+  font-weight: 700;
+}
+
+@media (min-width: 768px) {
+  .category-chips {
+    padding-left: var(--space-5);
+    padding-right: var(--space-5);
+  }
+}

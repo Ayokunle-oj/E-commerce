@@ -1,0 +1,94 @@
+/* Uses only variables from roots.css. Declares none.
+   This file only handles the page layout. The blocks style themselves. */
+
+.product-page {
+  display: flex;
+  flex-direction: column;
+  max-width: 72rem;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+}
+
+/* The top bar and the gallery run edge to edge on phones */
+.product-page > .product-top-bar {
+  margin: 0 calc(var(--space-4) * -1);
+}
+
+.product-page__top {
+  display: grid;
+  gap: var(--space-4);
+}
+.product-page__gallery {
+  margin: 0 calc(var(--space-4) * -1);
+}
+.product-page__info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+.product-page__sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+}
+
+/* Product not found */
+.product-page--missing {
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  min-height: 60dvh;
+  text-align: center;
+}
+.product-page__missing-title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+}
+.product-page__missing-text {
+  margin: 0;
+  color: var(--text-muted);
+}
+.product-page__missing-link {
+  display: inline-flex;
+  align-items: center;
+  height: 2.75rem;
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-md);
+  background: var(--primary);
+  color: var(--on-primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+@media (min-width: 768px) {
+  .product-page {
+    min-height: 0;
+    padding: 0 var(--space-5);
+  }
+  .product-page > .product-top-bar {
+    margin: 0 calc(var(--space-5) * -1);
+  }
+  .product-page__top {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-5);
+    align-items: start;
+    padding-top: var(--space-5);
+  }
+  .product-page__gallery {
+    margin: 0;
+  }
+  .product-page__sections {
+    gap: var(--space-5);
+    padding: var(--space-5) 0 var(--space-6);
+  }
+}
+
+@media (min-width: 1024px) {
+  .product-page__top {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 4fr);
+  }
+}

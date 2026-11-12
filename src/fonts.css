@@ -1,0 +1,22 @@
+/* The Naira sign (₦) lives in the "latin-ext" part of Inter and Bricolage Grotesque.
+   Without this file, any page showing a price downloads that whole part (85 kB for Inter).
+   These two tiny files hold only the ₦ glyph, copied unchanged from the same fonts.
+   This file must be imported AFTER the Fontsource imports, so these rules win for U+20A6. */
+
+@font-face {
+  font-family: "Inter Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("./assets/fonts/inter-naira.woff2") format("woff2-variations");
+  unicode-range: U+20A6;
+}
+
+@font-face {
+  font-family: "Bricolage Grotesque Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url("./assets/fonts/bricolage-naira.woff2") format("woff2-variations");
+  unicode-range: U+20A6;
+}

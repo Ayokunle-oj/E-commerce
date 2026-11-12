@@ -1,0 +1,388 @@
+/* Uses only variables from roots.css. Declares none. */
+/* 
+.product-section {
+  min-width: 0;
+}
+
+.product-section__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+  padding: 0 var(--space-4);
+}
+.product-section__titles {
+  min-width: 0;
+}
+.product-section__title {
+  margin: 0;
+  color: var(--text);
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.product-section__subtitle {
+  margin: 2px 0 0;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+.product-section__see-all {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  min-height: 36px;
+  color: var(--primary-text, var(--primary));
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.product-section__empty {
+  margin: 0;
+  padding: var(--space-5) var(--space-4);
+  color: var(--text-muted);
+  text-align: center;
+} */
+
+/* When the grid sits inside a section, the header already provides the top spacing */
+/* .product-section .product-grid {
+  padding-top: 0;
+} */
+
+/* Row layout: one line of cards you scroll sideways */
+/* .product-section__row {
+  display: flex;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0 var(--space-4) var(--space-2);
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+.product-section__row::-webkit-scrollbar {
+  display: none;
+}
+.product-section__row-item {
+  display: flex;
+  flex: none;
+  width: clamp(
+    150px,
+    42vw,
+    200px
+  ); */
+/* shrinks with the screen, down to 320px phones */
+/* scroll-snap-align: start; */
+/* } */
+
+/* @media (min-width: 768px) {
+  .product-section__header,
+  .product-section__row {
+    padding-left: var(--space-5);
+    padding-right: var(--space-5);
+  }
+  .product-section__row-item {
+    width: 200px;
+  }
+} */
+
+/* Uses only variables from roots.css. Declares none. */
+
+.product-section {
+  min-width: 0;
+}
+
+.product-section__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+  padding: 0 var(--space-4);
+}
+.product-section__titles {
+  min-width: 0;
+}
+.product-section__title {
+  margin: 0;
+  color: var(--text);
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.product-section__subtitle {
+  margin: 2px 0 0;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+.product-section__see-all {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 2px;
+  min-height: 36px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-pill);
+  color: var(--primary-text, var(--primary));
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+.product-section__see-all:active {
+  transform: scale(0.97);
+}
+
+.product-section__empty {
+  margin: 0;
+  padding: var(--space-5) var(--space-4);
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* When the grid sits inside a section, the header already provides the top spacing */
+.product-section .product-grid {
+  padding-top: 0;
+}
+
+/* Row layout: one line of cards you scroll sideways */
+.product-section__row {
+  display: flex;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0 var(--space-4) var(--space-2);
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+.product-section__row::-webkit-scrollbar {
+  display: none;
+}
+.product-section__row-item {
+  display: flex;
+  flex: none;
+  width: clamp(
+    150px,
+    42vw,
+    200px
+  ); /* shrinks with the screen, down to 320px phones */
+  scroll-snap-align: start;
+}
+
+/* ---------- Coloured glass panels (tone="green" | "gold" | "dark" | "red") ----------
+   A vivid coloured panel with two big blurred colour blobs (two different shades).
+   The title bar is frosted glass on top of them, so the blobs show through it. */
+.product-section--panel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin: 0 var(--space-4);
+  padding: var(--space-3) 0 var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius-md) * 2);
+  background: var(--surface); /* fallback for older browsers */
+}
+
+/* The blobs. They sit behind the glass, so they need to be strong enough to show through. */
+.product-section--panel::before,
+.product-section--panel::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  border-radius: 50%;
+  opacity: 0.6;
+  filter: blur(34px);
+  pointer-events: none;
+}
+.product-section--panel::before {
+  top: -60px;
+  right: -30px;
+  width: 220px;
+  height: 220px;
+}
+.product-section--panel::after {
+  bottom: -70px;
+  left: -40px;
+  width: 190px;
+  height: 190px;
+}
+
+/* The glass title bar */
+.product-section--panel .product-section__header {
+  align-items: center;
+  margin: 0 var(--space-3) var(--space-3);
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius-md) * 1.5);
+  background: var(--surface);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  backdrop-filter: blur(14px) saturate(160%);
+}
+
+/* A short colour bar before every title */
+.product-section--panel .product-section__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.product-section--panel .product-section__title::before {
+  content: "";
+  flex: none;
+  width: 4px;
+  height: 1.1em;
+  border-radius: var(--radius-pill);
+}
+
+/* "See all" pill: a second, stronger layer of glass */
+.product-section--panel .product-section__see-all {
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+/* Cards sit tighter to the panel edge */
+.product-section--panel .product-section__row {
+  padding-left: var(--space-3);
+  padding-right: var(--space-3);
+}
+.product-section--panel .product-grid {
+  padding: 0 var(--space-3) var(--space-2);
+}
+
+/* Green: trust. Green panel, a yellow second blob, frosted white-green glass. */
+.product-section--green {
+  background: color-mix(in srgb, var(--primary) 24%, var(--surface));
+}
+.product-section--green::before {
+  background: var(--primary);
+}
+.product-section--green::after {
+  background: var(--accent);
+}
+.product-section--green .product-section__header {
+  border-color: color-mix(in srgb, var(--surface) 65%, transparent);
+  background: color-mix(in srgb, var(--surface) 46%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--surface) 80%, transparent);
+}
+.product-section--green .product-section__see-all {
+  border-color: color-mix(in srgb, var(--primary) 35%, transparent);
+  background: color-mix(in srgb, var(--primary) 16%, transparent);
+}
+.product-section--green .product-section__title::before {
+  background: var(--primary);
+}
+
+/* Gold: popular. Warm yellow panel, an orange second blob, frosted cream glass. */
+.product-section--gold {
+  background: color-mix(in srgb, var(--accent) 48%, var(--surface));
+}
+.product-section--gold::before {
+  background: var(--accent);
+}
+.product-section--gold::after {
+  background: var(--error);
+  background: color-mix(in srgb, var(--error) 55%, var(--accent));
+}
+.product-section--gold .product-section__header {
+  border-color: color-mix(in srgb, var(--surface) 70%, transparent);
+  background: color-mix(in srgb, var(--surface) 48%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--surface) 80%, transparent);
+}
+.product-section--gold .product-section__see-all {
+  border-color: color-mix(in srgb, var(--text) 25%, transparent);
+  background: color-mix(in srgb, var(--accent) 45%, transparent);
+}
+.product-section--gold .product-section__title::before {
+  background: var(--text);
+}
+
+/* Red: deals. Rose panel, a yellow second blob, frosted pink glass. */
+.product-section--red {
+  background: color-mix(in srgb, var(--error) 20%, var(--surface));
+}
+.product-section--red::before {
+  background: var(--error);
+}
+.product-section--red::after {
+  background: var(--accent);
+}
+.product-section--red .product-section__header {
+  border-color: color-mix(in srgb, var(--surface) 65%, transparent);
+  background: color-mix(in srgb, var(--surface) 48%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--surface) 80%, transparent);
+}
+.product-section--red .product-section__see-all {
+  border-color: color-mix(in srgb, var(--error) 35%, transparent);
+  background: color-mix(in srgb, var(--error) 14%, transparent);
+}
+.product-section--red .product-section__title::before {
+  background: var(--error);
+}
+
+/* Dark: budget. Dark panel, green and yellow blobs, smoked glass with light text. */
+.product-section--dark {
+  border-color: var(--text);
+  background: var(--text);
+}
+.product-section--dark::before {
+  background: var(--primary);
+}
+.product-section--dark::after {
+  background: var(--accent);
+}
+.product-section--dark .product-section__header {
+  border-color: color-mix(in srgb, var(--surface) 22%, transparent);
+  background: color-mix(in srgb, var(--surface) 12%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--surface) 25%, transparent);
+}
+.product-section--dark .product-section__title {
+  color: var(--surface);
+}
+.product-section--dark .product-section__title::before {
+  background: var(--accent);
+}
+.product-section--dark .product-section__subtitle {
+  color: color-mix(in srgb, var(--surface) 72%, transparent);
+}
+.product-section--dark .product-section__see-all {
+  border-color: color-mix(in srgb, var(--surface) 35%, transparent);
+  background: color-mix(in srgb, var(--surface) 18%, transparent);
+  color: var(--surface);
+}
+
+@media (min-width: 768px) {
+  .product-section__header,
+  .product-section__row {
+    padding-left: var(--space-5);
+    padding-right: var(--space-5);
+  }
+  .product-section__row-item {
+    width: 200px;
+  }
+  .product-section--panel {
+    margin: 0 var(--space-5);
+    padding: var(--space-4) 0 var(--space-4);
+  }
+  .product-section--panel .product-section__header {
+    margin: 0 var(--space-4) var(--space-4);
+    padding: var(--space-3) var(--space-3) var(--space-3) var(--space-4);
+  }
+  .product-section--panel .product-section__row {
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+  }
+  .product-section--panel .product-grid {
+    padding: 0 var(--space-4) var(--space-2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-section__see-all {
+    transition: none;
+  }
+}

@@ -1,0 +1,114 @@
+/* Uses only variables from roots.css. Declares none. */
+
+.wishlist-item {
+  display: grid;
+  grid-template-columns: 5rem minmax(0, 1fr);
+  gap: var(--space-3);
+  padding: var(--space-3);
+  list-style: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.wishlist-item__thumb {
+  display: block;
+  align-self: start;
+}
+
+.wishlist-item__info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+.wishlist-item__heading {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  line-height: 1.35;
+}
+.wishlist-item__name {
+  display: -webkit-box;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  color: var(--text);
+  text-decoration: none;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.wishlist-item__verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin: 0;
+  color: var(--success);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.wishlist-item__prices {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-2);
+  margin-top: auto;
+  font-variant-numeric: tabular-nums;
+}
+.wishlist-item__price {
+  font-size: var(--text-base);
+  font-weight: 800;
+}
+.wishlist-item__old-price {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* Buttons run along the bottom of the card */
+.wishlist-item__actions {
+  display: flex;
+  grid-column: 1 / -1;
+  gap: var(--space-2);
+}
+.wishlist-item__move {
+  flex: 1;
+  height: 2.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--text);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+.wishlist-item__move:hover:not(:disabled) {
+  border-color: var(--primary);
+  color: var(--primary-text, var(--primary));
+}
+.wishlist-item__move:disabled {
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+.wishlist-item__remove {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.wishlist-item__remove:hover {
+  color: var(--error);
+}
+
+@media (max-width: 360px) {
+  .wishlist-item {
+    grid-template-columns: 4rem minmax(0, 1fr);
+  }
+}

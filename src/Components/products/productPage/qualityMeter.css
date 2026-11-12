@@ -1,0 +1,42 @@
+/* Uses only variables from roots.css. Declares none. */
+
+.quality-meter {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+}
+.quality-meter__label {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+.quality-meter__track {
+  flex: none;
+  width: 7rem;
+  height: 6px;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: var(--border);
+}
+.quality-meter__fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  transform-origin: left;
+}
+.quality-meter__value {
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.quality-meter__fill--very-low { background: var(--quality-very-low); }
+.quality-meter__fill--low { background: var(--quality-low); }
+.quality-meter__fill--fair { background: var(--quality-fair); }
+.quality-meter__fill--good { background: var(--quality-good); }
+.quality-meter__fill--high { background: var(--quality-high); }
+.quality-meter__value--very-low { color: var(--quality-very-low); }
+.quality-meter__value--low { color: var(--quality-low); }
+.quality-meter__value--fair { color: var(--quality-fair); }
+.quality-meter__value--good { color: var(--quality-good); }
+.quality-meter__value--high { color: var(--quality-high); }

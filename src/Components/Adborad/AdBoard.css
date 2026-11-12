@@ -1,0 +1,357 @@
+/* Uses only variables from roots.css. Declares none. */
+
+.ad-board-wrap {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: var(--space-4);
+}
+
+/* The rectangle. Its colour (for the controls) follows the ad that is showing. */
+.ad-board {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  overflow: hidden;
+  border-radius: calc(var(--radius-md) * 2);
+  background: var(--surface);
+  transition: color calc(var(--duration-fast) * 4) var(--ease-out);
+}
+.ad-board--primary {
+  color: var(--on-primary);
+}
+.ad-board--dark {
+  color: var(--surface);
+}
+.ad-board--accent {
+  color: var(--on-accent);
+}
+.ad-board--light {
+  color: var(--text);
+}
+
+.ad-board__viewport {
+  display: grid; /* every slide sits in the same cell: height = tallest slide */
+}
+
+/* ---------- Slides ---------- */
+.ad-board__slide {
+  grid-area: 1 / 1;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(72px, 24vw, 130px); /* picture shrinks with the screen */
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-4) 52px;
+  min-height: clamp(168px, 48vw, 220px);
+  opacity: 0;
+  pointer-events: none;
+  /* A slide that is leaving stays solid for the fade time, then switches off */
+  transition: opacity 0s linear calc(var(--duration-fast) * 4);
+}
+.ad-board__slide--active {
+  z-index: 2;
+  opacity: 1;
+  pointer-events: auto;
+  /* The new slide fades in over the old one: no flash and no see-through blend */
+  transition: opacity calc(var(--duration-fast) * 4) var(--ease-out);
+}
+
+.ad-board__slide--primary {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+.ad-board__slide--dark {
+  background: var(--text);
+  color: var(--surface);
+}
+.ad-board__slide--accent {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+.ad-board__slide--light {
+  background: var(--primary-tint);
+  color: var(--text);
+}
+
+/* Text and picture rise in a little after the background */
+.ad-board__content,
+.ad-board__media {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+.ad-board__slide--active .ad-board__content,
+.ad-board__slide--active .ad-board__media {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity calc(var(--duration-fast) * 3) var(--ease-out) var(--duration-fast),
+    transform calc(var(--duration-fast) * 3) var(--ease-out)
+      var(--duration-fast);
+}
+
+.ad-board__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.ad-board__tag {
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, currentColor 16%, transparent);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ad-board__title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.125rem, 0.4rem + 4vw, 1.75rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.ad-board__subtitle {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  font-size: clamp(0.75rem, 0.55rem + 1vw, 0.875rem);
+  line-height: 1.4;
+  opacity: 0.85;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.ad-board__cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  margin-top: var(--space-1);
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+.ad-board__cta:active {
+  transform: scale(0.97);
+}
+.ad-board__slide--primary .ad-board__cta {
+  background: var(--on-primary);
+  color: var(--primary);
+}
+.ad-board__slide--dark .ad-board__cta {
+  background: var(--surface);
+  color: var(--text);
+}
+.ad-board__slide--accent .ad-board__cta {
+  background: var(--on-accent);
+  color: var(--accent);
+}
+.ad-board__slide--light .ad-board__cta {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+.ad-board__media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 0;
+}
+.ad-board__image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.ad-board__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min(100%, 220px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: color-mix(in srgb, currentColor 12%, transparent);
+}
+.ad-board__icon svg {
+  width: 46%;
+  height: 46%;
+}
+
+/* ---------- Progress bars ---------- */
+.ad-board__dots {
+  position: absolute;
+  left: var(--space-4);
+  bottom: var(--space-3);
+  z-index: 3;
+  display: flex;
+  gap: var(--space-1);
+}
+.ad-board__dot {
+  display: flex;
+  align-items: center;
+  width: 36px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+.ad-board__track {
+  width: 100%;
+  height: 4px;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, currentColor 30%, transparent);
+}
+.ad-board__fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  animation-name: ad-board-progress;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+@keyframes ad-board-progress {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Pause while the user has paused it, hovers it, or is using the keyboard on it */
+.ad-board--paused .ad-board__fill {
+  animation-play-state: paused;
+}
+@media (hover: hover) {
+  .ad-board:hover .ad-board__fill {
+    animation-play-state: paused;
+  }
+}
+.ad-board:has(:focus-visible) .ad-board__fill {
+  animation-play-state: paused;
+}
+
+/* ---------- Controls ---------- */
+.ad-board__controls {
+  position: absolute;
+  right: var(--space-3);
+  bottom: var(--space-2);
+  z-index: 3;
+  display: flex;
+  gap: var(--space-2);
+}
+.ad-board__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, currentColor 16%, transparent);
+  color: inherit;
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+.ad-board__button:hover {
+  background: color-mix(in srgb, currentColor 28%, transparent);
+}
+.ad-board__arrow {
+  display: none;
+}
+
+/* ---------- Tablet (768px and up) ---------- */
+@media (min-width: 768px) {
+  .ad-board-wrap {
+    padding: var(--space-5);
+  }
+  .ad-board__slide {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: var(--space-5);
+    padding: var(--space-5) var(--space-6) 64px;
+    min-height: clamp(240px, 32vw, 320px);
+  }
+  .ad-board__title {
+    font-size: clamp(1.25rem, 1rem + 2.2vw, 2.75rem);
+  }
+  .ad-board__subtitle {
+    font-size: var(--text-base);
+  }
+  .ad-board__cta {
+    min-height: 40px;
+    padding: 0 var(--space-4);
+  }
+  .ad-board__dots {
+    left: var(--space-6);
+    bottom: var(--space-4);
+  }
+  .ad-board__controls {
+    right: var(--space-5);
+    bottom: var(--space-3);
+  }
+  .ad-board__arrow {
+    display: inline-flex;
+  }
+}
+
+/* ---------- Desktop (1024px and up) ---------- */
+@media (min-width: 1024px) {
+  .ad-board__slide {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    padding: var(--space-6) calc(var(--space-6) * 2) 72px;
+    min-height: clamp(300px, 28vw, 400px);
+  }
+  .ad-board__subtitle {
+    font-size: var(--text-lg);
+  }
+  .ad-board__dots {
+    left: calc(var(--space-6) * 2);
+  }
+  .ad-board__controls {
+    right: calc(var(--space-6) * 2);
+  }
+}
+
+/* ---------- Small phones (400px and under, down to 320px) ---------- */
+@media (max-width: 400px) {
+  .ad-board-wrap {
+    padding: var(--space-3);
+  }
+  .ad-board__slide {
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-3) 48px;
+  }
+  .ad-board__dots {
+    left: var(--space-3);
+  }
+  .ad-board__controls {
+    right: var(--space-2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ad-board,
+  .ad-board__slide,
+  .ad-board__content,
+  .ad-board__media,
+  .ad-board__cta {
+    transition: none;
+  }
+}

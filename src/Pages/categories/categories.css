@@ -1,0 +1,83 @@
+/* Uses only variables from roots.css. Declares none.
+   This file only handles the page layout. The blocks style themselves. */
+
+.categories_container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-bottom: var(--space-6);
+}
+
+/* Top area as a grid, so the same pieces can sit in different places:
+   phone:         title / search + filter / chips
+   tablet+laptop: title + filter / chips   (the navbar already has the search bar) */
+.categories_top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "title title"
+    "search filter"
+    "chips chips";
+  gap: var(--space-3) var(--space-2);
+  padding: var(--space-4) var(--space-4) 0;
+}
+.categories_title {
+  grid-area: title;
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.categories_search {
+  grid-area: search;
+  min-width: 0;
+}
+.categories_filter {
+  grid-area: filter;
+}
+.categories_chips {
+  grid-area: chips;
+  min-width: 0;
+  margin: 0 calc(var(--space-4) * -1); /* chips scroll edge to edge */
+}
+
+.categories_sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding-top: var(--space-4);
+}
+
+/* "All categories" link on a See all page */
+.categories_back {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 40px;
+  margin: 0 var(--space-4);
+  color: var(--primary-text, var(--primary));
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+@media (min-width: 768px) {
+  .categories_top {
+    grid-template-areas:
+      "title filter"
+      "chips chips";
+    align-items: center;
+    padding: var(--space-5) var(--space-5) 0;
+  }
+  .categories_search {
+    display: none; /* the top navbar already has the search bar */
+  }
+  .categories_chips {
+    margin: 0 calc(var(--space-5) * -1);
+  }
+  .categories_back {
+    margin: 0 var(--space-5);
+  }
+}

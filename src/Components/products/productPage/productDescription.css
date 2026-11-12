@@ -1,0 +1,38 @@
+/* Uses only variables from roots.css. Declares none. */
+
+.product-description {
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+.product-description__title {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+}
+.product-description__text {
+  margin: 0;
+  overflow-wrap: anywhere;
+  white-space: pre-line; /* keeps line breaks, still plain text */
+  color: var(--text);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+.product-description__text--clamped {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.product-description__toggle {
+  margin-top: var(--space-2);
+  padding: var(--space-1) 0;
+  border: 0;
+  background: transparent;
+  color: var(--primary-text, var(--primary));
+  font-size: var(--text-sm);
+  font-weight: 700;
+  cursor: pointer;
+}

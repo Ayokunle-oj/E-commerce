@@ -1,0 +1,55 @@
+/* Uses only variables from roots.css. Declares none. */
+
+.similar-items {
+  min-width: 0;
+}
+.similar-items__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+.similar-items__title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+}
+.similar-items__all {
+  color: var(--primary-text, var(--primary));
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* One row you swipe sideways. Cards keep a fixed width so they look the same as in the lists. */
+.similar-items__row {
+  display: flex;
+  gap: var(--space-2);
+  margin: 0 calc(var(--space-4) * -1);
+  padding: 0 var(--space-4) var(--space-2);
+  overflow-x: auto;
+  list-style: none;
+  scroll-snap-type: x proximity;
+  scroll-padding: 0 var(--space-4);
+  scrollbar-width: none;
+}
+.similar-items__row::-webkit-scrollbar {
+  display: none;
+}
+.similar-items__item {
+  display: flex;
+  flex: 0 0 9.5rem;
+  scroll-snap-align: start;
+}
+
+@media (min-width: 768px) {
+  .similar-items__row {
+    margin: 0;
+    padding: 0 0 var(--space-2);
+    scrollbar-width: thin;
+  }
+  .similar-items__item {
+    flex-basis: 12.5rem;
+  }
+}

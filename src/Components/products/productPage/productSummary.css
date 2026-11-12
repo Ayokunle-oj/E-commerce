@@ -1,0 +1,68 @@
+/* Uses only variables from roots.css. Declares none. */
+
+.product-summary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+.product-summary__name {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.product-summary__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px var(--space-3);
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+.product-summary__rating {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--text);
+  font-weight: 600;
+}
+
+.product-summary__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.product-summary__verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px var(--space-2) 3px 6px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--success);
+}
+.product-summary__stock {
+  color: var(--error);
+}
+.product-summary__sold-out {
+  padding: 3px var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--text);
+  color: var(--surface);
+}
+
+@media (min-width: 768px) {
+  .product-summary__name {
+    font-size: var(--text-xl);
+  }
+}

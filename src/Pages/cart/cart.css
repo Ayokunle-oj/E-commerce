@@ -1,0 +1,194 @@
+/* Uses only variables from roots.css. Declares none. */
+
+.cart-page {
+  display: flex;
+  flex-direction: column;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-4) 0;
+}
+
+.cart-page__header {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr) 2.5rem;
+  align-items: center;
+  margin-bottom: var(--space-4);
+}
+
+.cart-page__back,
+.cart-page__wishlist {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.cart-page__heading {
+  text-align: center;
+}
+.cart-page__title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+.cart-page__count {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.cart-page__wishlist-count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: var(--radius-pill);
+  background: var(--primary);
+  color: var(--on-primary);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.cart-page__layout {
+  display: grid;
+  gap: var(--space-4);
+}
+.cart-page__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Empty cart */
+.cart-page__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-6) var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  text-align: center;
+}
+.cart-page__empty-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  margin-bottom: var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--primary-tint);
+  color: var(--primary);
+}
+.cart-page__empty-title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+}
+.cart-page__empty-text {
+  margin: 0 0 var(--space-3);
+  color: var(--text-muted);
+}
+.cart-page__shop {
+  display: inline-flex;
+  align-items: center;
+  height: 2.75rem;
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-md);
+  background: var(--primary);
+  color: var(--on-primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* Phones: the checkout button stays pinned above the bottom nav while the list is on screen.
+   It sits at the end of the page (not fixed), so it never covers the footer. */
+.cart-page__bar {
+  position: sticky;
+  bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0px));
+  z-index: var(--z-sticky);
+  margin: var(--space-4) calc(var(--space-4) * -1) 0;
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+.cart-page__checkout {
+  width: 100%;
+  height: 3rem;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--primary);
+  color: var(--on-primary);
+  font-size: var(--text-base);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  /* With only a few items, push the bar down to the bottom of the screen */
+  .cart-page {
+    min-height: calc(
+      100dvh - var(--bottom-nav-height) - env(safe-area-inset-bottom, 0px)
+    );
+  }
+  .cart-page__bar {
+    margin-top: auto;
+  }
+}
+
+/* Tablet and up */
+@media (min-width: 768px) {
+  .cart-page {
+    padding: var(--space-5);
+  }
+  .cart-page__header {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .cart-page__back {
+    display: none;
+  }
+  .cart-page__heading {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+    text-align: left;
+  }
+  .cart-page__bar {
+    display: none;
+  }
+}
+
+/* Laptop and desktop: summary sits beside the list */
+@media (min-width: 1024px) {
+  .cart-page__layout {
+    grid-template-columns: minmax(0, 1fr) 22rem;
+    align-items: start;
+    gap: var(--space-5);
+  }
+  .cart-page__aside {
+    position: sticky;
+    top: calc(var(--navbar-height) + var(--space-5));
+  }
+}

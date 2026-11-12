@@ -1,0 +1,59 @@
+/* Uses only variables from roots.css. Declares none. */
+
+.undo-toast-region {
+  position: fixed;
+  left: 0;
+  right: 0;
+  /* above the checkout bar and the bottom nav on phones */
+  bottom: calc(
+    var(--bottom-nav-height) + env(safe-area-inset-bottom) + 4.5rem +
+      var(--space-2)
+  );
+  z-index: var(--z-dropdown);
+  display: flex;
+  justify-content: center;
+  padding: 0 var(--space-4);
+  pointer-events: none;
+}
+
+.undo-toast {
+  pointer-events: auto;
+  width: min(100%, 26rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--text);
+  color: var(--background);
+  font-size: var(--text-sm);
+  animation: undo-toast-in var(--duration-fast) var(--ease-out);
+}
+
+.undo-toast__undo {
+  padding: var(--space-1) var(--space-2);
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+@keyframes undo-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (min-width: 768px) {
+  .undo-toast-region {
+    bottom: var(--space-5);
+  }
+}

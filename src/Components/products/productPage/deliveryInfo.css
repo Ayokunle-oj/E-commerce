@@ -1,0 +1,28 @@
+/* Uses only variables from roots.css. Declares none. */
+
+.delivery-info {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+.delivery-info__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.delivery-info__row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+  line-height: 1.4;
+}
+.delivery-info__row svg {
+  flex: none;
+  margin-top: 1px;
+  color: var(--text-muted);
+}

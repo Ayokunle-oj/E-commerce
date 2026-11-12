@@ -1,0 +1,67 @@
+/* Uses only variables from roots.css. Declares none. */
+
+.inspection-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+.inspection-details__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+}
+.inspection-details__title svg {
+  color: var(--success);
+}
+
+.inspection-details__checks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.inspection-details__check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+}
+.inspection-details__check svg {
+  flex: none;
+  margin-top: 2px;
+}
+.inspection-details__pass {
+  color: var(--success);
+}
+.inspection-details__fail {
+  color: var(--error);
+}
+
+.inspection-details__note {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+.inspection-details__date {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+.inspection-details__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

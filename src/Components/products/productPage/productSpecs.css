@@ -1,0 +1,35 @@
+/* Uses only variables from roots.css. Declares none. */
+
+.product-specs {
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+.product-specs__title {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+}
+.product-specs__list {
+  margin: 0;
+}
+.product-specs__row {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+  border-top: 1px solid var(--border);
+  font-size: var(--text-sm);
+}
+.product-specs__row:first-child {
+  border-top: 0;
+}
+.product-specs__row dt {
+  color: var(--text-muted);
+}
+.product-specs__row dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-weight: 600;
+}

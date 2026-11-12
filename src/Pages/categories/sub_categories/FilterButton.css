@@ -1,0 +1,61 @@
+/* Uses only variables from roots.css. Declares none. */
+
+.filter-button {
+  position: relative;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+.filter-button:hover {
+  border-color: var(--primary);
+  color: var(--primary-text, var(--primary));
+}
+
+/* The word "Filters" only shows from tablet up; phones get just the icon */
+.filter-button__label {
+  display: none;
+}
+
+.filter-button__badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--background);
+  border-radius: var(--radius-pill);
+  background: var(--primary);
+  color: var(--on-primary);
+  font-size: 0.625rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+@media (min-width: 768px) {
+  .filter-button {
+    width: auto;
+    padding: 0 var(--space-4);
+  }
+  .filter-button__label {
+    display: inline;
+  }
+}

@@ -1,0 +1,148 @@
+/* Uses only variables from roots.css. Declares none. */
+
+/* Mobile (under 768px): the top navbar is hidden. The bottom nav is used instead. */
+.Navbar_container {
+  display: none;
+}
+
+/* Tablet and desktop (768px and up) */
+@media (min-width: 768px) {
+  .Navbar_container {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-nav);
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: var(--navbar-height);
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .navbar_wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    gap: var(--space-5);
+    padding: 0 var(--space-5);
+  }
+
+  .logo {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-decoration: none;
+    color: var(--text);
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+    font-weight: 800;
+  }
+
+  .navbar_search {
+    flex: 1;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .navbar_search .search-bar__input {
+    background: var(--background);
+  }
+
+  .navbar_action {
+    flex: none;
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+  }
+
+  .navbar__link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 48px;
+    color: var(--text);
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+  .navbar__link:hover {
+    color: var(--primary);
+  }
+
+  .navbar__icon-wrap {
+    position: relative;
+    display: inline-flex;
+    padding: 5px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: var(--background);
+  }
+
+  .navbar__action-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+  .navbar__action-sub {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+  .navbar__action-main {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .navbar__avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-pill);
+    background: var(--primary-tint);
+    color: var(--primary);
+    font-size: var(--text-sm);
+    font-weight: 700;
+  }
+
+  /* Badges: small circle on the top-right corner of the icon */
+  .navbar__badge {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-pill);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .navbar__badge--alert {
+    background: var(--error);
+    color: var(--on-error);
+  } /* notifications: red */
+  .navbar__badge--cart {
+    background: var(--primary);
+    color: var(--on-primary);
+  } /* cart items: cobalt */
+}
+
+/* Tablet only (768px to 1023px): hide the small top line and tighten the spacing */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .navbar__action-sub {
+    display: none;
+  }
+  .navbar_wrapper {
+    gap: var(--space-4);
+    padding: 0 var(--space-4);
+  }
+  .navbar_action {
+    gap: var(--space-4);
+  }
+}

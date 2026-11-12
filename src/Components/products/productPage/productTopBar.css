@@ -1,0 +1,68 @@
+/* Uses only variables from roots.css. Declares none. */
+
+.product-top-bar {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.product-top-bar__actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.product-top-bar__button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text);
+  text-decoration: none;
+  cursor: pointer;
+}
+.product-top-bar__button--on {
+  border-color: var(--primary);
+  color: var(--primary-text, var(--primary));
+}
+
+.product-top-bar__badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: var(--radius-pill);
+  background: var(--primary);
+  color: var(--on-primary);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+@media (min-width: 768px) {
+  /* sits under the sticky top navbar */
+  .product-top-bar {
+    top: var(--navbar-height);
+    padding: var(--space-2) var(--space-5);
+  }
+  .product-top-bar__cart {
+    display: none;
+  }
+}

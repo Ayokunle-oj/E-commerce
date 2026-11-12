@@ -1,0 +1,87 @@
+/* Uses only variables from roots.css. Declares none. */
+
+.promo-code__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.promo-code__row {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.promo-code__input {
+  flex: 1;
+  min-width: 0;
+  height: 2.75rem;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--text);
+  font-size: var(--text-base); /* 16px stops iOS zooming on focus */
+  text-transform: uppercase;
+}
+
+.promo-code__input::placeholder {
+  color: var(--text-muted);
+  text-transform: none;
+}
+
+.promo-code__apply {
+  height: 2.75rem;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--text);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.promo-code__apply:hover {
+  background: var(--primary-tint);
+}
+
+.promo-code__error {
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-sm);
+  color: var(--error);
+}
+
+.promo-code--applied {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--success);
+  border-radius: var(--radius-md);
+  color: var(--success);
+}
+
+.promo-code__code {
+  font-weight: 700;
+}
+
+.promo-code__status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-sm);
+}
+
+.promo-code__remove {
+  margin-left: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  text-decoration: underline;
+  cursor: pointer;
+}

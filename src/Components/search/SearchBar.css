@@ -1,0 +1,44 @@
+/* Uses only variables from roots.css. Declares none. */
+.search-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.search-bar__input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 56px 0 var(--space-5);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 16px; /* 16px stops iOS zooming on focus */
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+.search-bar__input::placeholder {
+  color: var(--text-muted);
+}
+.search-bar__input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+.search-bar__input::-webkit-search-cancel-button {
+  appearance: none;
+}
+
+.search-bar__submit {
+  position: absolute;
+  right: 4px;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--primary);
+  color: var(--on-primary);
+}

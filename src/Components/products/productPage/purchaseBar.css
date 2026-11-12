@@ -1,0 +1,124 @@
+/* Uses only variables from roots.css. Declares none. */
+
+.purchase-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.purchase-bar__price {
+  flex: none;
+  font-size: var(--text-lg);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.purchase-bar__add,
+.purchase-bar__cart {
+  display: inline-flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  height: 3rem;
+  padding: 0 var(--space-4);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--primary);
+  color: var(--on-primary);
+  font-size: var(--text-base);
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.purchase-bar__add:active,
+.purchase-bar__cart:active {
+  transform: scale(0.98);
+}
+.purchase-bar__add:disabled {
+  background: var(--border);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.purchase-bar__quantity {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: 2px;
+}
+.purchase-bar__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  color: var(--success);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.purchase-bar__stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+}
+.purchase-bar__step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+}
+.purchase-bar__step:disabled {
+  color: var(--text-muted);
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.purchase-bar__qty {
+  min-width: 1.75rem;
+  text-align: center;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.purchase-bar__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Phones: pinned to the bottom while the page is on screen. It sits at the end of the page,
+   not fixed to the window, so it never covers the footer. */
+.purchase-bar--sticky {
+  position: sticky;
+  bottom: 0;
+  z-index: var(--z-sticky);
+  margin: auto calc(var(--space-4) * -1) 0;
+  padding: var(--space-3) var(--space-4)
+    calc(var(--space-3) + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+.purchase-bar--inline {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .purchase-bar--sticky {
+    display: none;
+  }
+  .purchase-bar--inline {
+    display: flex;
+  }
+}
