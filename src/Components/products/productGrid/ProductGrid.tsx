@@ -1,5 +1,4 @@
 import type { Product } from "../../../types/product";
-import { products } from "../products";
 import ProductCard from "../productCard/ProductCard";
 import "./ProductGrid.css";
 
@@ -10,7 +9,7 @@ interface ProductGridProps {
 }
 
 function ProductGrid({
-  // products = [],
+  products = [],
   onAddToCart,
   emptyMessage = "No products to show yet.",
 }: ProductGridProps) {

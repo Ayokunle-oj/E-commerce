@@ -23,6 +23,7 @@ type Action =
   | { type: "delete"; id: string }
   | { type: "wishlist"; id: string }
   | { type: "unwishlist"; id: string }
+  | { type: "toggleWishlist"; product: Product }
   | { type: "moveToCart"; id: string }
   | { type: "undo" }
   | { type: "dismissUndo" };
@@ -36,6 +37,7 @@ function reducer(state: State, action: Action): State {
       if (existing) {
         return {
           ...state,
+          last: null,
           items: state.items.map((i) =>
             i.id === product.id
               ? { ...i, quantity: Math.min(i.stock, i.quantity + 1) }
@@ -45,6 +47,7 @@ function reducer(state: State, action: Action): State {
       }
       return {
         ...state,
+        last: null,
         items: [
           ...state.items,
           { ...product, quantity: 1, addedBy: state.ownerId },
@@ -55,6 +58,7 @@ function reducer(state: State, action: Action): State {
     case "setQty":
       return {
         ...state,
+        last: null,
         items: state.items.map((i) =>
           i.id === action.id
             ? {
@@ -78,7 +82,11 @@ function reducer(state: State, action: Action): State {
     }
 
     case "delete":
-      return { ...state, items: state.items.filter((i) => i.id !== action.id) };
+      return {
+        ...state,
+        last: null,
+        items: state.items.filter((i) => i.id !== action.id),
+      };
 
     case "wishlist": {
       const index = state.items.findIndex((i) => i.id === action.id);
@@ -99,6 +107,17 @@ function reducer(state: State, action: Action): State {
         ...state,
         wishlist: state.wishlist.filter((w) => w.id !== action.id),
       };
+
+    case "toggleWishlist": {
+      const { product } = action;
+      const saved = state.wishlist.some((w) => w.id === product.id);
+      return {
+        ...state,
+        wishlist: saved
+          ? state.wishlist.filter((w) => w.id !== product.id)
+          : [product, ...state.wishlist],
+      };
+    }
 
     case "moveToCart": {
       const product = state.wishlist.find((w) => w.id === action.id);
@@ -122,6 +141,10 @@ function reducer(state: State, action: Action): State {
     case "undo": {
       const { last } = state;
       if (!last) return state;
+      // The product is already back in the cart: drop the undo, never add a second line
+      if (state.items.some((i) => i.id === last.item.id)) {
+        return { ...state, last: null };
+      }
       const items = [...state.items];
       items.splice(Math.min(last.index, items.length), 0, last.item);
       return {
@@ -176,6 +199,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
     (id: string) => dispatch({ type: "unwishlist", id }),
     [],
   );
+  const toggleWishlist = useCallback(
+    (product: Product) => dispatch({ type: "toggleWishlist", product }),
+    [],
+  );
   const moveToCart = useCallback(
     (id: string) => dispatch({ type: "moveToCart", id }),
     [],
@@ -198,6 +225,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       deleteItem,
       moveToWishlist,
       removeFromWishlist,
+      toggleWishlist,
       moveToCart,
       undo,
       dismissUndo,
@@ -212,6 +240,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       deleteItem,
       moveToWishlist,
       removeFromWishlist,
+      toggleWishlist,
       moveToCart,
       undo,
       dismissUndo,

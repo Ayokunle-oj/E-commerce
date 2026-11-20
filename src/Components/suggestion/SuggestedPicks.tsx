@@ -29,7 +29,7 @@ import "./SuggestedPicks.css";
 
 export interface Pick {
   label: string;
-  to?: string; // defaults to a search for the label
+  to?: string; // defaults to the Categories page filtered by the label
   image?: string; // product photo; falls back to the icon
   icon?: LucideIcon;
 }
@@ -91,7 +91,7 @@ function SuggestedPicks({
           <li key={label} className="suggested_picks_item">
             <Link
               className="suggested_pick"
-              to={to ?? `/search?q=${encodeURIComponent(label)}`}
+              to={to ?? `/categories?cat=${encodeURIComponent(label)}`}
             >
               <span className="suggested_pick_media" aria-hidden="true">
                 {image ? (

@@ -38,7 +38,7 @@ const sampleAds: Ad[] = [
     tag: "New",
     title: "Back to school bags",
     subtitle: "Strong, light and made for campus life.",
-    to: "/search?q=Bags",
+    to: "/categories?cat=Bags",
     icon: Backpack,
     tone: "primary",
   },
@@ -47,7 +47,7 @@ const sampleAds: Ad[] = [
     tag: "Hot deal",
     title: "Earbuds that last all day",
     subtitle: "Clear sound for lectures and late-night study.",
-    to: "/search?q=Earbuds",
+    to: "/categories?cat=Earbuds",
     icon: Headphones,
     tone: "dark",
   },
@@ -56,7 +56,7 @@ const sampleAds: Ad[] = [
     tag: "Just in",
     title: "Phones for every budget",
     subtitle: "Browse the latest arrivals and pick yours.",
-    to: "/search?q=Phones",
+    to: "/categories?cat=Phones",
     icon: Smartphone,
     tone: "accent",
   },
@@ -65,7 +65,7 @@ const sampleAds: Ad[] = [
     tag: "Beauty",
     title: "Skincare and beauty favourites",
     subtitle: "Simple picks to keep you looking fresh.",
-    to: "/search?q=Beauty",
+    to: "/categories?cat=Beauty",
     icon: Sparkles,
     tone: "light",
   },
@@ -122,7 +122,10 @@ function AdBoard({
           if (event.key === "ArrowLeft") prev();
         }}
       >
-        <div className="ad-board__viewport" aria-live={playing ? "off" : "polite"}>
+        <div
+          className="ad-board__viewport"
+          aria-live={playing ? "off" : "polite"}
+        >
           {ads.map((ad, i) => {
             const active = i === index;
             const Icon = ad.icon;
@@ -140,8 +143,14 @@ function AdBoard({
                 <div className="ad-board__content">
                   {ad.tag && <span className="ad-board__tag">{ad.tag}</span>}
                   <p className="ad-board__title">{ad.title}</p>
-                  {ad.subtitle && <p className="ad-board__subtitle">{ad.subtitle}</p>}
-                  <Link className="ad-board__cta" to={ad.to} tabIndex={active ? 0 : -1}>
+                  {ad.subtitle && (
+                    <p className="ad-board__subtitle">{ad.subtitle}</p>
+                  )}
+                  <Link
+                    className="ad-board__cta"
+                    to={ad.to}
+                    tabIndex={active ? 0 : -1}
+                  >
                     {ad.cta ?? "Shop now"}
                   </Link>
                 </div>
@@ -192,7 +201,11 @@ function AdBoard({
                 aria-label={playing ? "Pause slideshow" : "Play slideshow"}
                 onClick={() => setPlaying((p) => !p)}
               >
-                {playing ? <Pause size={16} aria-hidden="true" /> : <Play size={16} aria-hidden="true" />}
+                {playing ? (
+                  <Pause size={16} aria-hidden="true" />
+                ) : (
+                  <Play size={16} aria-hidden="true" />
+                )}
               </button>
               <button
                 type="button"
