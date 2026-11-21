@@ -8,6 +8,8 @@ interface Props {
   onApplyPromo: (code: string) => void;
   onRemovePromo: () => void;
   onCheckout: () => void;
+  /** false while the checkout page does not exist: the button is disabled and says "coming soon" */
+  checkoutReady?: boolean;
 }
 
 export default function CartSummary({
@@ -16,6 +18,7 @@ export default function CartSummary({
   onApplyPromo,
   onRemovePromo,
   onCheckout,
+  checkoutReady = true,
 }: Props) {
   const { subtotal, discount, delivery, total, itemCount } = totals;
 
@@ -58,8 +61,11 @@ export default function CartSummary({
         type="button"
         className="cart-summary__checkout"
         onClick={onCheckout}
+        disabled={!checkoutReady}
       >
-        Checkout for {formatNaira(total)}
+        {checkoutReady
+          ? `Checkout for ${formatNaira(total)}`
+          : "Checkout coming soon"}
       </button>
     </section>
   );

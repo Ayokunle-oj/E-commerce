@@ -17,7 +17,7 @@ export default function PromoCode({ appliedCode, onApply, onRemove }: Props) {
     e.preventDefault();
     const code = value.trim().toUpperCase();
     if (!code) {
-      setError("Enter a promo code");
+      setError("Enter a coupon code");
       return;
     }
     if (!findPromo(code)) {
@@ -35,7 +35,7 @@ export default function PromoCode({ appliedCode, onApply, onRemove }: Props) {
         <span className="promo-code__code">{appliedCode}</span>
         <span className="promo-code__status">
           <Check size={16} aria-hidden="true" />
-          Promo applied
+          Coupon applied
         </span>
         <button type="button" className="promo-code__remove" onClick={onRemove}>
           Remove
@@ -47,7 +47,7 @@ export default function PromoCode({ appliedCode, onApply, onRemove }: Props) {
   return (
     <form className="promo-code" onSubmit={handleSubmit} noValidate>
       <label className="promo-code__label" htmlFor="promo-code-input">
-        Promo code
+        Coupon code
       </label>
       <div className="promo-code__row">
         <input
@@ -55,7 +55,7 @@ export default function PromoCode({ appliedCode, onApply, onRemove }: Props) {
           className="promo-code__input"
           type="text"
           value={value}
-          placeholder="Promo code"
+          placeholder="Coupon code"
           autoComplete="off"
           autoCapitalize="characters"
           spellCheck={false}

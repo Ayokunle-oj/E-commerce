@@ -11,6 +11,7 @@ import {
   markHintDone,
   shouldPlayHint,
 } from "./cartUtils";
+import { CHECKOUT_READY } from "./checkoutStatus";
 import "./cart.css";
 
 function Cart() {
@@ -37,7 +38,10 @@ function Cart() {
     if (location.key === "default") navigate("/");
     else navigate(-1);
   };
-  const goToCheckout = () => navigate("/checkout"); // page comes later
+  const goToCheckout = () => {
+    if (!CHECKOUT_READY) return; // checkout page comes later
+    navigate("/checkout");
+  };
 
   return (
     <div className="cart-page">
@@ -114,6 +118,7 @@ function Cart() {
               onApplyPromo={setPromoCode}
               onRemovePromo={() => setPromoCode(null)}
               onCheckout={goToCheckout}
+              checkoutReady={CHECKOUT_READY}
             />
           </aside>
         </div>
@@ -125,8 +130,11 @@ function Cart() {
             type="button"
             className="cart-page__checkout"
             onClick={goToCheckout}
+            disabled={!CHECKOUT_READY}
           >
-            Checkout for {formatNaira(totals.total)}
+            {CHECKOUT_READY
+              ? `Checkout for ${formatNaira(totals.total)}`
+              : "Checkout coming soon"}
           </button>
         </div>
       )}

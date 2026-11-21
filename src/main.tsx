@@ -6,17 +6,22 @@ import "@fontsource-variable/bricolage-grotesque";
 import "./fonts.css";
 import "./roots.css";
 import App from "./App";
+import ErrorBoundary from "./Components/errorBoundary/ErrorBoundary";
 import { ThemeProvider } from "./theme/ThemeProvider";
 import { CartProvider } from "./context/CartProvider";
 
+// The outer boundary is the last safety net: it catches crashes in the navbars,
+// the providers or the router itself, which the one inside App cannot reach.
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter>
-      <ThemeProvider>
-        <CartProvider>
-          <App />
-        </CartProvider>
-      </ThemeProvider>
-    </BrowserRouter>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <ThemeProvider>
+          <CartProvider>
+            <App />
+          </CartProvider>
+        </ThemeProvider>
+      </BrowserRouter>
+    </ErrorBoundary>
   </StrictMode>,
 );
