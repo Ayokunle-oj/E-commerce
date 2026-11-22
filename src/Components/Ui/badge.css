@@ -1,0 +1,35 @@
+/* Uses only variables from roots.css. Declares none.
+   Each tone mixes its own semantic colour into the surface, so it works in light and dark. */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0.125rem var(--space-2);
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+.badge--neutral {
+  border-color: var(--border);
+  background: var(--background);
+  color: var(--text-muted);
+}
+.badge--info {
+  background: var(--primary-tint);
+  color: var(--primary-text);
+}
+.badge--success {
+  background: color-mix(in srgb, var(--success) 14%, var(--surface));
+  color: var(--success);
+}
+.badge--warning {
+  background: color-mix(in srgb, var(--warning) 16%, var(--surface));
+  color: var(--warning);
+}
+.badge--error {
+  background: color-mix(in srgb, var(--error) 12%, var(--surface));
+  color: var(--error);
+}

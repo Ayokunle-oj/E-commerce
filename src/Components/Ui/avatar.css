@@ -1,0 +1,34 @@
+/* Uses only variables from roots.css. Declares none. */
+.avatar {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: var(--primary-tint);
+  color: var(--primary-text);
+  font-family: var(--font-heading);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+.avatar--md {
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: var(--text-sm);
+}
+.avatar--lg {
+  width: 3.5rem;
+  height: 3.5rem;
+  font-size: var(--text-lg);
+}
+.avatar--xl {
+  width: 5rem;
+  height: 5rem;
+  font-size: var(--text-xl);
+}
+.avatar__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

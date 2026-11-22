@@ -1,0 +1,225 @@
+/* Uses only variables from roots.css. Declares none. */
+
+.overview-heading {
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: 700;
+}
+
+/* Profile summary */
+.overview-profile {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: center;
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+.overview-profile > .btn {
+  grid-column: 1 / -1;
+}
+.overview-profile__name {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+}
+.overview-profile__details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin: 0 0 var(--space-3);
+  padding: 0;
+  list-style: none;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+.overview-profile__details li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  overflow-wrap: anywhere;
+}
+.overview-profile__details svg {
+  flex: none;
+  margin-top: 0.15em;
+}
+@media (min-width: 40rem) {
+  .overview-profile {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    padding: var(--space-5);
+    gap: var(--space-5);
+    align-items: start;
+  }
+  .overview-profile > .btn {
+    grid-column: auto;
+  }
+}
+
+/* Quick access */
+.overview-tiles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.overview-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  height: 100%;
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+.overview-tile:hover {
+  border-color: var(--primary);
+}
+.overview-tile__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-bottom: var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--primary-tint);
+  color: var(--primary-text);
+}
+.overview-tile__label {
+  font-weight: 700;
+}
+.overview-tile__meta {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+@media (min-width: 40rem) {
+  .overview-tiles {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Cards */
+.overview-cards {
+  display: grid;
+  gap: var(--space-5);
+}
+.overview-card {
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+.overview-card__head {
+  display: flex;
+  align-items: center;
+  min-height: 2.75rem;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+.overview-card__title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: 700;
+}
+.overview-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 2.75rem;
+  color: var(--primary-text);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-decoration: none;
+}
+.overview-card__link:hover {
+  text-decoration: underline;
+}
+@media (min-width: 48rem) {
+  .overview-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .overview-card {
+    padding: var(--space-5);
+  }
+}
+
+/* Default address */
+.overview-address {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.overview-address__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+.overview-address__name {
+  margin: 0;
+  font-weight: 700;
+}
+.overview-address__line {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.45;
+}
+
+/* Wishlist preview */
+.overview-saved {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.overview-saved__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  color: var(--text);
+  text-decoration: none;
+}
+.overview-saved__name {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  line-height: 1.3;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.overview-saved__price {
+  color: var(--primary-text);
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+@media (min-width: 40rem) {
+  .overview-saved {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Phones only: the full list of sections. Wider screens have the sidebar. */
+@media (min-width: 48rem) {
+  .overview-menu {
+    display: none;
+  }
+}

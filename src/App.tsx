@@ -17,6 +17,7 @@ import Cart from "./Pages/cart/Cart";
 import Wishlist from "./Pages/wishlist/Wishlist";
 import Categories from "./Pages/categories/Categories";
 import NotFound from "./Components/errorBoundary/NotFound";
+import { AccountProvider } from "./Pages/profile/AccountProvider";
 import { useCart } from "./context/useCart";
 import "./App.css";
 
@@ -24,6 +25,11 @@ import "./App.css";
 // If the file fails to load, the page reloads once before showing the error screen.
 const ProductPage = lazyWithRetry(
   () => import("./Components/products/productPage/ProductPage"),
+);
+
+// The account area loads only when someone opens /account
+const AccountRoutes = lazyWithRetry(
+  () => import("./Pages/profile/AccountRoutes"),
 );
 
 // Pages you have not built yet. Swap each one for the real page when it is ready.
@@ -67,40 +73,55 @@ function App() {
       {pathname === "/" && <MobileNav />}
 
       <main className="app_main">
-        {/* A crash in a page shows the retry screen here, and the navbars stay usable.
-            Moving to another page clears the error. */}
-        <ErrorBoundary resetKey={pathname}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/categories" element={<Categories />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/wishlist" element={<Wishlist />} />
-            <Route
-              path="/product/:id"
-              element={
-                <Suspense
-                  fallback={
-                    <div className="app_placeholder" role="status">
-                      <p>Loading...</p>
-                    </div>
-                  }
-                >
-                  <ProductPage />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/checkout"
-              element={<Placeholder title="Checkout" />}
-            />
-            <Route path="/account" element={<Placeholder title="Account" />} />
-            <Route
-              path="/search"
-              element={<Placeholder title="Search results" />}
-            />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </ErrorBoundary>
+        <AccountProvider>
+          {/* A crash in a page shows the retry screen here, and the navbars stay usable.
+              Moving to another page clears the error. */}
+          <ErrorBoundary resetKey={pathname}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/categories" element={<Categories />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/wishlist" element={<Wishlist />} />
+              <Route
+                path="/product/:id"
+                element={
+                  <Suspense
+                    fallback={
+                      <div className="app_placeholder" role="status">
+                        <p>Loading...</p>
+                      </div>
+                    }
+                  >
+                    <ProductPage />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="/checkout"
+                element={<Placeholder title="Checkout" />}
+              />
+              <Route
+                path="/account/*"
+                element={
+                  <Suspense
+                    fallback={
+                      <div className="app_placeholder" role="status">
+                        <p>Loading...</p>
+                      </div>
+                    }
+                  >
+                    <AccountRoutes />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="/search"
+                element={<Placeholder title="Search results" />}
+              />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </ErrorBoundary>
+        </AccountProvider>
       </main>
 
       <div className="app_footer">

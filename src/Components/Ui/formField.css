@@ -1,0 +1,68 @@
+/* Uses only variables from roots.css. Declares none. */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+.form-field__label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+.form-field__optional {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+.form-field :where(input:not([type="checkbox"], [type="radio"], [type="file"]), select, textarea) {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1rem; /* 16px: stops iOS zooming the page on focus */
+  line-height: 1.4;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+.form-field textarea {
+  min-height: 5.5rem;
+  resize: vertical;
+}
+.form-field :where(input, textarea)::placeholder {
+  color: var(--text-muted);
+}
+.form-field :where(input, select, textarea):hover:not(:disabled) {
+  border-color: var(--text-muted);
+}
+.form-field :where(input, select, textarea):focus-visible {
+  border-color: var(--primary);
+  outline: 2px solid var(--primary);
+  outline-offset: 0;
+}
+.form-field :where(input, select, textarea):disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.form-field--invalid :where(input, select, textarea) {
+  border-color: var(--error);
+}
+.form-field__hint {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+.form-field__error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-1);
+  margin: 0;
+  color: var(--error);
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+.form-field__error svg {
+  flex: none;
+  margin-top: 0.15em;
+}

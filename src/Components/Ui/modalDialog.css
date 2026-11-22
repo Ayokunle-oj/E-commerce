@@ -1,0 +1,118 @@
+/* Uses only variables from roots.css. Declares none. */
+
+.modal {
+  /* Phones: a bottom sheet. */
+  width: 100%;
+  max-width: 100%;
+  max-height: calc(100dvh - var(--space-5));
+  margin: auto 0 0;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-bottom: 0;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  background: var(--surface);
+  color: var(--text);
+  overflow: auto;
+}
+.modal[open] {
+  animation: modal-in var(--duration-fast) var(--ease-out);
+}
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+}
+
+/* The dim layer. Deliberately a fixed dark scrim in BOTH themes (a light scrim over a dark
+   page looks wrong), and a literal because ::backdrop does not reliably inherit variables on
+   older Android browsers. This is the only literal colour in the account work. */
+.modal::backdrop {
+  background: rgb(0 0 0 / 0.55);
+}
+
+/* Stop the page scrolling behind an open dialog. */
+body:has(dialog.modal[open]) {
+  overflow: hidden;
+}
+
+.modal__panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-4)
+    calc(var(--space-5) + env(safe-area-inset-bottom));
+}
+.modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+.modal__title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+.modal__close {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin: calc(var(--space-2) * -1) calc(var(--space-2) * -1) 0 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.modal__close:hover {
+  background: var(--background);
+  color: var(--text);
+}
+.modal__description {
+  color: var(--text-muted);
+  font-size: var(--text-base);
+  line-height: 1.5;
+}
+.modal__body {
+  margin-top: var(--space-2);
+}
+
+/* Forms on phones: the whole screen. */
+@media (max-width: 39.999rem) {
+  .modal--full-mobile {
+    height: 100dvh;
+    max-height: 100dvh;
+    border: 0;
+    border-radius: 0;
+  }
+}
+
+/* Larger screens: a centred card. */
+@media (min-width: 40rem) {
+  .modal {
+    width: 28rem;
+    max-width: calc(100vw - var(--space-5));
+    margin: auto;
+    border-bottom: 1px solid var(--border);
+    border-radius: var(--radius-md);
+  }
+  .modal.modal--full-mobile {
+    width: 38rem; /* forms get more room than a simple confirmation */
+  }
+  .modal__panel {
+    padding: var(--space-5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal[open] {
+    animation: none;
+  }
+}

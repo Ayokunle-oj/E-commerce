@@ -1,0 +1,253 @@
+import { Link } from "react-router-dom";
+import {
+  ArrowRight,
+  CalendarDays,
+  Heart,
+  Mail,
+  MapPin,
+  Package,
+  Pencil,
+  Phone,
+  ShieldCheck,
+  ShoppingBag,
+  UserRound,
+} from "lucide-react";
+import Avatar from "../../Components/Ui/Avatar";
+import Badge from "../../Components/Ui/Badge";
+import { ButtonLink } from "../../Components/Ui/Button";
+import EmptyState from "../../Components/Ui/EmptyState";
+import ProductThumb from "./../../Components/cartItem/ProductThumb";
+import { useCart } from "./../../context/useCart";
+import { formatNaira } from "./../cart/cartUtils";
+import { useAccount } from "./AccountContext";
+import { LABEL_ICONS } from "./addressLabels";
+import { addressLines, formatPhone } from "./nigeria";
+import AccountNav from "./AccountNav";
+import PageHeader from "./PageHeader";
+import "./overview.css";
+
+const memberSince = (iso: string) =>
+  new Intl.DateTimeFormat("en-NG", { month: "long", year: "numeric" }).format(
+    new Date(iso),
+  );
+
+function Overview() {
+  const { profile, addresses } = useAccount();
+  const { wishlist, itemCount } = useCart();
+  const defaultAddress = addresses.find((a) => a.isDefault) ?? addresses[0];
+  const savedPreview = wishlist.slice(0, 4);
+
+  const tiles = [
+    {
+      to: "/account/profile",
+      icon: UserRound,
+      label: "Profile",
+      meta: "Name, email, phone",
+    },
+    {
+      to: "/account/addresses",
+      icon: MapPin,
+      label: "Addresses",
+      meta: `${addresses.length} saved`,
+    },
+    {
+      to: "/wishlist",
+      icon: Heart,
+      label: "Wishlist",
+      meta: `${wishlist.length} saved`,
+    },
+    {
+      to: "/cart",
+      icon: ShoppingBag,
+      label: "Cart",
+      meta: itemCount === 1 ? "1 item" : `${itemCount} items`,
+    },
+  ];
+
+  return (
+    <>
+      <PageHeader title="My account" backTo={false} />
+
+      <section
+        className="overview-profile"
+        aria-labelledby="overview-profile-name"
+      >
+        <Avatar name={profile.fullName} url={profile.avatarUrl} size="xl" />
+        <div className="overview-profile__info">
+          <h2 className="overview-profile__name" id="overview-profile-name">
+            {profile.fullName}
+          </h2>
+          <ul className="overview-profile__details">
+            <li>
+              <Mail size={16} aria-hidden="true" />
+              <span>{profile.email}</span>
+            </li>
+            <li>
+              <Phone size={16} aria-hidden="true" />
+              <span>
+                {profile.phone
+                  ? formatPhone(profile.phone)
+                  : "No phone number added"}
+              </span>
+            </li>
+            <li>
+              <CalendarDays size={16} aria-hidden="true" />
+              <span>Member since {memberSince(profile.createdAt)}</span>
+            </li>
+          </ul>
+          <Badge tone="success" icon={ShieldCheck}>
+            Active account
+          </Badge>
+        </div>
+        <ButtonLink
+          to="/account/profile"
+          variant="secondary"
+          icon={<Pencil size={16} aria-hidden="true" />}
+        >
+          Edit profile
+        </ButtonLink>
+      </section>
+
+      <section aria-labelledby="overview-quick">
+        <h2 className="overview-heading" id="overview-quick">
+          Quick access
+        </h2>
+        <ul className="overview-tiles">
+          {tiles.map(({ to, icon: Icon, label, meta }) => (
+            <li key={to}>
+              <Link className="overview-tile" to={to}>
+                <span className="overview-tile__icon" aria-hidden="true">
+                  <Icon size={22} />
+                </span>
+                <span className="overview-tile__label">{label}</span>
+                <span className="overview-tile__meta">{meta}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <div className="overview-cards">
+        <section className="overview-card" aria-labelledby="overview-orders">
+          <div className="overview-card__head">
+            <h2 className="overview-card__title" id="overview-orders">
+              Recent orders
+            </h2>
+          </div>
+          <EmptyState
+            compact
+            icon={Package}
+            title="No orders yet"
+            actions={
+              <ButtonLink to="/" size="sm">
+                Start shopping
+              </ButtonLink>
+            }
+          >
+            When you place an order, you&rsquo;ll be able to track it here.
+          </EmptyState>
+        </section>
+
+        <section className="overview-card" aria-labelledby="overview-address">
+          <div className="overview-card__head">
+            <h2 className="overview-card__title" id="overview-address">
+              Delivery address
+            </h2>
+            <Link className="overview-card__link" to="/account/addresses">
+              Manage <ArrowRight size={14} aria-hidden="true" />
+            </Link>
+          </div>
+          {defaultAddress ? (
+            <div className="overview-address">
+              <div className="overview-address__tags">
+                <Badge tone="info" icon={LABEL_ICONS[defaultAddress.label]}>
+                  {defaultAddress.label}
+                </Badge>
+                <Badge tone="success">Default</Badge>
+              </div>
+              <p className="overview-address__name">
+                {defaultAddress.fullName}
+              </p>
+              {addressLines(defaultAddress).map((line) => (
+                <p className="overview-address__line" key={line}>
+                  {line}
+                </p>
+              ))}
+              <p className="overview-address__line">
+                {formatPhone(defaultAddress.phone)}
+              </p>
+            </div>
+          ) : (
+            <EmptyState
+              compact
+              icon={MapPin}
+              title="No saved address"
+              actions={
+                <ButtonLink to="/account/addresses" size="sm">
+                  Add address
+                </ButtonLink>
+              }
+            >
+              Save an address to check out faster.
+            </EmptyState>
+          )}
+        </section>
+      </div>
+
+      <section className="overview-card" aria-labelledby="overview-wishlist">
+        <div className="overview-card__head">
+          <h2 className="overview-card__title" id="overview-wishlist">
+            Wishlist
+          </h2>
+          {wishlist.length > 0 && (
+            <Link className="overview-card__link" to="/wishlist">
+              View all ({wishlist.length}){" "}
+              <ArrowRight size={14} aria-hidden="true" />
+            </Link>
+          )}
+        </div>
+        {savedPreview.length > 0 ? (
+          <ul className="overview-saved">
+            {savedPreview.map((product) => (
+              <li key={product.id}>
+                <Link
+                  className="overview-saved__item"
+                  to={`/product/${product.id}`}
+                >
+                  <ProductThumb image={product.image} />
+                  <span className="overview-saved__name">{product.name}</span>
+                  <span className="overview-saved__price">
+                    {formatNaira(product.price)}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <EmptyState
+            compact
+            icon={Heart}
+            title="Nothing saved yet"
+            actions={
+              <ButtonLink to="/" size="sm">
+                Browse products
+              </ButtonLink>
+            }
+          >
+            Tap the heart on a product to save it for later.
+          </EmptyState>
+        )}
+      </section>
+
+      {/* Phones: the full list of account sections. On wider screens the sidebar does this job. */}
+      <section className="overview-menu" aria-labelledby="overview-menu-title">
+        <h2 className="overview-heading" id="overview-menu-title">
+          All account sections
+        </h2>
+        <AccountNav variant="menu" />
+      </section>
+    </>
+  );
+}
+
+export default Overview;

@@ -1,0 +1,87 @@
+/* Uses only variables from roots.css. Declares none. */
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.profile-photo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+.profile-photo__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+.profile-photo__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.profile-form__actions {
+  display: flex;
+  flex-direction: column-reverse; /* phones: Save on top, full width */
+  gap: var(--space-2);
+}
+@media (min-width: 40rem) {
+  .profile-form__actions {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}
+
+.profile-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.profile-row__icon {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-pill);
+  background: var(--primary-tint);
+  color: var(--primary-text);
+}
+.profile-row__text {
+  flex: 1;
+  min-width: 0;
+}
+.profile-row__label {
+  margin: 0;
+  font-weight: 600;
+}
+.profile-row__value {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.profile-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin: 0;
+}
+.profile-facts dt {
+  margin-bottom: var(--space-1);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+.profile-facts dd {
+  margin: 0;
+  font-weight: 600;
+}

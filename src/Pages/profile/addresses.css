@@ -1,0 +1,219 @@
+/* Uses only variables from roots.css. Declares none. */
+
+.addresses__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.addresses__count {
+  margin: calc(var(--space-2) * -1) 0 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+/* One address */
+.address-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+.address-card--default {
+  border-color: var(--primary);
+}
+.address-card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding-bottom: var(--space-3);
+}
+.address-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+.address-card__name {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--text-base);
+  font-weight: 700;
+}
+.address-card__line {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.45;
+}
+.address-card__meta {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: var(--space-1) 0 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.4;
+}
+.address-card__meta svg {
+  flex: none;
+  margin-top: 0.2em;
+}
+.address-card__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* phones: Edit | Delete, with "Set as default" on its own row */
+  gap: var(--space-2);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border);
+}
+.address-card__make-default {
+  grid-column: 1 / -1;
+  order: 3;
+}
+@media (min-width: 40rem) {
+  .address-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .address-card__make-default {
+    order: 0;
+  }
+}
+.address-card__delete {
+  color: var(--error);
+}
+@media (min-width: 40rem) {
+  .address-card__delete {
+    margin-left: auto;
+  }
+}
+.address-card__delete:hover {
+  background: color-mix(in srgb, var(--error) 10%, var(--surface));
+}
+
+/* Add / edit form (inside the dialog) */
+.address-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.address-form__labels {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.address-form__legend {
+  margin-bottom: var(--space-2);
+  padding: 0;
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+.address-form__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.label-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 2.75rem;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  cursor: pointer;
+  font-weight: 600;
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out);
+}
+.label-chip input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.label-chip:has(input:checked) {
+  border-color: var(--primary);
+  background: var(--primary-tint);
+  color: var(--primary-text);
+}
+.label-chip:has(input:focus-visible) {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.label-chip:has(input:disabled) {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.address-form__grid {
+  display: grid;
+  gap: var(--space-4);
+}
+@media (min-width: 40rem) {
+  .address-form__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .address-form__wide {
+    grid-column: 1 / -1;
+  }
+}
+
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  cursor: pointer;
+  font-weight: 500;
+}
+.check input {
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0.1rem 0 0;
+  accent-color: var(--primary);
+}
+.check__hint {
+  display: block;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: 400;
+}
+
+.address-form__error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0;
+  color: var(--error);
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+.address-form__error svg {
+  flex: none;
+  margin-top: 0.15em;
+}
+.address-form__actions {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--space-2);
+}
+@media (min-width: 40rem) {
+  .address-form__actions {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}
