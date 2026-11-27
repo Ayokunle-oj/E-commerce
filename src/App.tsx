@@ -18,6 +18,7 @@ import Wishlist from "./Pages/wishlist/Wishlist";
 import Categories from "./Pages/categories/Categories";
 import NotFound from "./Components/errorBoundary/NotFound";
 import { AccountProvider } from "./Pages/profile/AccountProvider";
+import Login from "./Pages/login/Login";
 import { useCart } from "./context/useCart";
 import "./App.css";
 
@@ -79,6 +80,7 @@ function App() {
           <ErrorBoundary resetKey={pathname}>
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/" element={<Login />} />
               <Route path="/categories" element={<Categories />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/wishlist" element={<Wishlist />} />

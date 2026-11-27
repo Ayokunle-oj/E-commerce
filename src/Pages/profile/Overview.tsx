@@ -9,8 +9,6 @@ import {
   Pencil,
   Phone,
   ShieldCheck,
-  ShoppingBag,
-  UserRound,
 } from "lucide-react";
 import Avatar from "../../Components/Ui/Avatar";
 import Badge from "../../Components/Ui/Badge";
@@ -33,36 +31,9 @@ const memberSince = (iso: string) =>
 
 function Overview() {
   const { profile, addresses } = useAccount();
-  const { wishlist, itemCount } = useCart();
+  const { wishlist } = useCart();
   const defaultAddress = addresses.find((a) => a.isDefault) ?? addresses[0];
   const savedPreview = wishlist.slice(0, 4);
-
-  const tiles = [
-    {
-      to: "/account/profile",
-      icon: UserRound,
-      label: "Profile",
-      meta: "Name, email, phone",
-    },
-    {
-      to: "/account/addresses",
-      icon: MapPin,
-      label: "Addresses",
-      meta: `${addresses.length} saved`,
-    },
-    {
-      to: "/wishlist",
-      icon: Heart,
-      label: "Wishlist",
-      meta: `${wishlist.length} saved`,
-    },
-    {
-      to: "/cart",
-      icon: ShoppingBag,
-      label: "Cart",
-      meta: itemCount === 1 ? "1 item" : `${itemCount} items`,
-    },
-  ];
 
   return (
     <>
@@ -106,25 +77,6 @@ function Overview() {
         >
           Edit profile
         </ButtonLink>
-      </section>
-
-      <section aria-labelledby="overview-quick">
-        <h2 className="overview-heading" id="overview-quick">
-          Quick access
-        </h2>
-        <ul className="overview-tiles">
-          {tiles.map(({ to, icon: Icon, label, meta }) => (
-            <li key={to}>
-              <Link className="overview-tile" to={to}>
-                <span className="overview-tile__icon" aria-hidden="true">
-                  <Icon size={22} />
-                </span>
-                <span className="overview-tile__label">{label}</span>
-                <span className="overview-tile__meta">{meta}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
       </section>
 
       <div className="overview-cards">
