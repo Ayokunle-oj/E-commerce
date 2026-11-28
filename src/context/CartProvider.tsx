@@ -1,7 +1,15 @@
-import { useCallback, useMemo, useReducer, type ReactNode } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+  type ReactNode,
+} from "react";
 import type { CartLine } from "../types/cart";
 import type { Product } from "../types/product";
-import { DEMO_CART, DEMO_WISHLIST } from "../Pages/cart/demoCart";
+import { useAuth } from "../auth/authContext";
+import { demoServer } from "../demo/demoServer";
 import {
   CartContext,
   type CartContextValue,
@@ -25,11 +33,15 @@ type Action =
   | { type: "unwishlist"; id: string }
   | { type: "toggleWishlist"; product: Product }
   | { type: "moveToCart"; id: string }
+  | { type: "reset"; userId: string | null }
   | { type: "undo" }
   | { type: "dismissUndo" };
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
+    case "reset":
+      return init(action.userId);
+
     case "add": {
       const { product } = action;
       if (product.stock <= 0) return state;
@@ -163,54 +175,94 @@ function reducer(state: State, action: Action): State {
   }
 }
 
-const init = (): State => ({
-  ownerId: DEMO_CART.ownerId,
-  items: DEMO_CART.items,
-  wishlist: DEMO_WISHLIST,
-  last: null,
-  seq: 0,
-});
+// The cart a person starts with: whatever the server has saved for them (nothing for a guest).
+const init = (userId: string | null): State => {
+  const saved = userId
+    ? demoServer.loadCart(userId)
+    : { items: [], wishlist: [] };
+  return {
+    ownerId: userId ?? "guest",
+    items: saved.items,
+    wishlist: saved.wishlist,
+    last: null,
+    seq: 0,
+  };
+};
+
+const NO_ITEMS: CartLine[] = [];
+const NO_PRODUCTS: Product[] = [];
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(reducer, undefined, init);
+  const { user } = useAuth();
+  const userId = user?.id ?? null;
+  const signedIn = userId !== null;
+  const [state, dispatch] = useReducer(reducer, userId, init);
+
+  // A different person (or nobody) is now using the app: start from a fresh cart.
+  const [cartUserId, setCartUserId] = useState(userId);
+  if (cartUserId !== userId) {
+    setCartUserId(userId);
+    dispatch({ type: "reset", userId });
+  }
+
+  // Save the cart and wishlist after every change, so they are still there after a refresh.
+  const { items: savedItems, wishlist: savedWishlist } = state;
+  useEffect(() => {
+    if (userId)
+      demoServer.saveCart(userId, {
+        items: savedItems,
+        wishlist: savedWishlist,
+      });
+  }, [userId, savedItems, savedWishlist]);
+
+  // Guests cannot change the cart or the wishlist. The screens ask them to sign in first;
+  // this is the safety net in case any screen forgets.
+  const send = useCallback(
+    (action: Action) => {
+      if (signedIn) dispatch(action);
+    },
+    [signedIn],
+  );
 
   const addToCart = useCallback(
-    (product: Product) => dispatch({ type: "add", product }),
-    [],
+    (product: Product) => send({ type: "add", product }),
+    [send],
   );
   const setQuantity = useCallback(
-    (id: string, quantity: number) =>
-      dispatch({ type: "setQty", id, quantity }),
-    [],
+    (id: string, quantity: number) => send({ type: "setQty", id, quantity }),
+    [send],
   );
   const removeItem = useCallback(
-    (id: string) => dispatch({ type: "remove", id }),
-    [],
+    (id: string) => send({ type: "remove", id }),
+    [send],
   );
   const deleteItem = useCallback(
-    (id: string) => dispatch({ type: "delete", id }),
-    [],
+    (id: string) => send({ type: "delete", id }),
+    [send],
   );
   const moveToWishlist = useCallback(
-    (id: string) => dispatch({ type: "wishlist", id }),
-    [],
+    (id: string) => send({ type: "wishlist", id }),
+    [send],
   );
   const removeFromWishlist = useCallback(
-    (id: string) => dispatch({ type: "unwishlist", id }),
-    [],
+    (id: string) => send({ type: "unwishlist", id }),
+    [send],
   );
   const toggleWishlist = useCallback(
-    (product: Product) => dispatch({ type: "toggleWishlist", product }),
-    [],
+    (product: Product) => send({ type: "toggleWishlist", product }),
+    [send],
   );
   const moveToCart = useCallback(
-    (id: string) => dispatch({ type: "moveToCart", id }),
-    [],
+    (id: string) => send({ type: "moveToCart", id }),
+    [send],
   );
-  const undo = useCallback(() => dispatch({ type: "undo" }), []);
-  const dismissUndo = useCallback(() => dispatch({ type: "dismissUndo" }), []);
+  const undo = useCallback(() => send({ type: "undo" }), [send]);
+  const dismissUndo = useCallback(() => send({ type: "dismissUndo" }), [send]);
 
-  const { items, wishlist, last } = state;
+  // A guest always sees an empty cart and wishlist.
+  const items = signedIn ? state.items : NO_ITEMS;
+  const wishlist = signedIn ? state.wishlist : NO_PRODUCTS;
+  const last = signedIn ? state.last : null;
 
   const value = useMemo<CartContextValue>(
     () => ({

@@ -32,7 +32,8 @@ export interface AccountContextValue {
   profile: Profile;
   addresses: Address[];
   saveProfile: (values: ProfileValues) => Promise<void>;
-  setAvatar: (url: string | null) => void;
+  /** Pass a photo, or null to remove it. */
+  setAvatar: (file: File | null) => Promise<void>;
   /** Adds a new address, or updates the one with `id`. */
   saveAddress: (values: AddressValues, id?: string) => Promise<Address>;
   deleteAddress: (id: string) => Promise<void>;
@@ -43,6 +44,7 @@ export const AccountContext = createContext<AccountContextValue | null>(null);
 
 export function useAccount(): AccountContextValue {
   const value = useContext(AccountContext);
-  if (!value) throw new Error("useAccount must be used inside <AccountProvider>");
+  if (!value)
+    throw new Error("useAccount must be used inside <AccountProvider>");
   return value;
 }

@@ -19,7 +19,11 @@ import Categories from "./Pages/categories/Categories";
 import NotFound from "./Components/errorBoundary/NotFound";
 import { AccountProvider } from "./Pages/profile/AccountProvider";
 import Login from "./Pages/login/Login";
+import Signup from "./Pages/login/Signup";
+import RequireAuth from "./Components/auth/RequireAuth";
+import { useAuth } from "./auth/authContext";
 import { useCart } from "./context/useCart";
+import { Heart, ShoppingBag, UserRound } from "lucide-react";
 import "./App.css";
 
 // The product page loads only when someone opens a product.
@@ -62,28 +66,58 @@ function ScrollToTop() {
 function App() {
   const { pathname } = useLocation();
   const { itemCount, subtotal } = useCart();
+  const { user } = useAuth();
+  const navUser = user
+    ? { name: user.fullName, avatarUrl: user.avatarUrl ?? undefined }
+    : null;
+  // The login and sign-up pages are full screens with their own header
+  const isAuthPage = pathname === "/login" || pathname === "/signup";
 
   return (
     <>
       <ScrollToTop />
-      {/* No sign-in exists yet, so the navs get no user and show the guest state.
-          When login is built, pass the signed-in user to all three navs. */}
-      <Navbar cartCount={itemCount} cartTotal={subtotal} />
+      {/* Guests get the "Sign in" state in all three navs. Signed in: their name and avatar. */}
+      {!isAuthPage && (
+        <Navbar user={navUser} cartCount={itemCount} cartTotal={subtotal} />
+      )}
 
       {/* The phone greeting + search belongs to Home. Other pages bring their own top section. */}
-      {pathname === "/" && <MobileNav />}
+      {pathname === "/" && <MobileNav user={navUser} />}
 
       <main className="app_main">
-        <AccountProvider>
+        <AccountProvider key={user?.id ?? "guest"}>
           {/* A crash in a page shows the retry screen here, and the navbars stay usable.
               Moving to another page clears the error. */}
           <ErrorBoundary resetKey={pathname}>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/" element={<Login />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
               <Route path="/categories" element={<Categories />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/wishlist" element={<Wishlist />} />
+              <Route
+                path="/cart"
+                element={
+                  <RequireAuth
+                    icon={ShoppingBag}
+                    title="Sign in to see your cart"
+                    message="Log in or create an account to add items to your cart and check out."
+                  >
+                    <Cart />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/wishlist"
+                element={
+                  <RequireAuth
+                    icon={Heart}
+                    title="Sign in to see your wishlist"
+                    message="Log in or create an account to save items you like for later."
+                  >
+                    <Wishlist />
+                  </RequireAuth>
+                }
+              />
               <Route
                 path="/product/:id"
                 element={
@@ -100,20 +134,34 @@ function App() {
               />
               <Route
                 path="/checkout"
-                element={<Placeholder title="Checkout" />}
+                element={
+                  <RequireAuth
+                    icon={ShoppingBag}
+                    title="Sign in to check out"
+                    message="Log in or create an account to place your order."
+                  >
+                    <Placeholder title="Checkout" />
+                  </RequireAuth>
+                }
               />
               <Route
                 path="/account/*"
                 element={
-                  <Suspense
-                    fallback={
-                      <div className="app_placeholder" role="status">
-                        <p>Loading...</p>
-                      </div>
-                    }
+                  <RequireAuth
+                    icon={UserRound}
+                    title="Sign in to see your profile"
+                    message="Log in or create an account to manage your details, addresses and orders."
                   >
-                    <AccountRoutes />
-                  </Suspense>
+                    <Suspense
+                      fallback={
+                        <div className="app_placeholder" role="status">
+                          <p>Loading...</p>
+                        </div>
+                      }
+                    >
+                      <AccountRoutes />
+                    </Suspense>
+                  </RequireAuth>
                 }
               />
               <Route
@@ -126,11 +174,15 @@ function App() {
         </AccountProvider>
       </main>
 
-      <div className="app_footer">
-        <Footer />
-      </div>
+      {!isAuthPage && (
+        <div className="app_footer">
+          <Footer />
+        </div>
+      )}
       {/* The product page has its own purchase bar in that spot */}
-      {!pathname.startsWith("/product/") && <BottomNav cartCount={itemCount} />}
+      {!isAuthPage && !pathname.startsWith("/product/") && (
+        <BottomNav user={navUser} cartCount={itemCount} />
+      )}
     </>
   );
 }

@@ -1,0 +1,19 @@
+/* Uses only variables from roots.css. Declares none. */
+.sign-in-required {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 28rem;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4);
+}
+.sign-in-required .empty-state {
+  width: 100%;
+  border-radius: 1.5rem;
+}
+.sign-in-required .btn {
+  min-height: 3rem;
+  border-radius: var(--radius-pill);
+}

@@ -1,13 +1,10 @@
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
-  CalendarDays,
   Heart,
-  Mail,
   MapPin,
   Package,
   Pencil,
-  Phone,
   ShieldCheck,
 } from "lucide-react";
 import Avatar from "../../Components/Ui/Avatar";
@@ -22,6 +19,7 @@ import { LABEL_ICONS } from "./addressLabels";
 import { addressLines, formatPhone } from "./nigeria";
 import AccountNav from "./AccountNav";
 import PageHeader from "./PageHeader";
+import SignOutButton from "./SignOutButton";
 import "./overview.css";
 
 const memberSince = (iso: string) =>
@@ -44,35 +42,27 @@ function Overview() {
         aria-labelledby="overview-profile-name"
       >
         <Avatar name={profile.fullName} url={profile.avatarUrl} size="xl" />
-        <div className="overview-profile__info">
-          <h2 className="overview-profile__name" id="overview-profile-name">
-            {profile.fullName}
-          </h2>
-          <ul className="overview-profile__details">
-            <li>
-              <Mail size={16} aria-hidden="true" />
-              <span>{profile.email}</span>
-            </li>
-            <li>
-              <Phone size={16} aria-hidden="true" />
-              <span>
-                {profile.phone
-                  ? formatPhone(profile.phone)
-                  : "No phone number added"}
-              </span>
-            </li>
-            <li>
-              <CalendarDays size={16} aria-hidden="true" />
-              <span>Member since {memberSince(profile.createdAt)}</span>
-            </li>
-          </ul>
+        <h2 className="overview-profile__name" id="overview-profile-name">
+          {profile.fullName}
+        </h2>
+        <p className="overview-profile__contact">
+          <span>{profile.email}</span>
+          <span>
+            {profile.phone
+              ? formatPhone(profile.phone)
+              : "No phone number added"}
+          </span>
+        </p>
+        <div className="overview-profile__status">
           <Badge tone="success" icon={ShieldCheck}>
             Active account
           </Badge>
+          <span>Member since {memberSince(profile.createdAt)}</span>
         </div>
         <ButtonLink
           to="/account/profile"
           variant="secondary"
+          size="sm"
           icon={<Pencil size={16} aria-hidden="true" />}
         >
           Edit profile
@@ -198,6 +188,10 @@ function Overview() {
         </h2>
         <AccountNav variant="menu" />
       </section>
+
+      <div className="overview-logout">
+        <SignOutButton />
+      </div>
     </>
   );
 }

@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useCart } from "../../../context/useCart";
+import { useAuth } from "../../../auth/authContext";
 import { products } from "../products";
 import { getExtras } from "../../../data/productExtras";
 import ProductTopBar from "./ProductTopBar";
@@ -22,6 +23,7 @@ function ProductPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const { items, wishlist, itemCount, toggleWishlist } = useCart();
+  const { requireAuth } = useAuth();
 
   const product = useMemo(() => products.find((p) => p.id === id), [id]);
 
@@ -82,7 +84,11 @@ function ProductPage() {
         wishlisted={wishlisted}
         cartCount={itemCount}
         onBack={goBack}
-        onToggleWishlist={() => toggleWishlist(product)}
+        onToggleWishlist={() => {
+          if (requireAuth("Sign in to save items to your wishlist.")) {
+            toggleWishlist(product);
+          }
+        }}
       />
 
       <div className="product-page__top">

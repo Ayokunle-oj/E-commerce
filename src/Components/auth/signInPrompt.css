@@ -1,0 +1,16 @@
+/* Uses only variables from roots.css. Declares none. */
+.sign-in-prompt {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.sign-in-prompt .btn {
+  min-height: 3rem;
+  border-radius: var(--radius-pill);
+}
+.sign-in-prompt__note {
+  margin: var(--space-2) 0 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  text-align: center;
+}

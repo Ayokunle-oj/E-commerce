@@ -7,22 +7,17 @@
   font-weight: 700;
 }
 
-/* Profile summary */
+/* Profile summary: no card. Photo in the middle, details underneath. */
 .overview-profile {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: var(--space-4);
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  padding: var(--space-4);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  background: var(--surface);
-}
-.overview-profile > .btn {
-  grid-column: 1 / -1;
+  gap: var(--space-2);
+  padding: var(--space-4) 0 var(--space-2);
+  text-align: center;
 }
 .overview-profile__name {
-  margin: 0 0 var(--space-2);
+  margin: var(--space-2) 0 0;
   font-family: var(--font-heading);
   font-size: var(--text-xl);
   font-weight: 800;
@@ -30,36 +25,47 @@
   letter-spacing: -0.02em;
   overflow-wrap: anywhere;
 }
-.overview-profile__details {
+.overview-profile__contact {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
-  margin: 0 0 var(--space-3);
-  padding: 0;
-  list-style: none;
+  align-items: center;
+  gap: 2px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  overflow-wrap: anywhere;
+}
+.overview-profile__status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  margin: var(--space-1) 0 var(--space-2);
   color: var(--text-muted);
   font-size: var(--text-sm);
 }
-.overview-profile__details li {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-2);
-  overflow-wrap: anywhere;
-}
-.overview-profile__details svg {
-  flex: none;
-  margin-top: 0.15em;
-}
 @media (min-width: 40rem) {
-  .overview-profile {
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    padding: var(--space-5);
-    gap: var(--space-5);
-    align-items: start;
+  .overview-profile__contact {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-1) var(--space-4);
   }
-  .overview-profile > .btn {
-    grid-column: auto;
+  .overview-profile__status {
+    flex-direction: row;
+    gap: var(--space-3);
   }
+}
+
+/* Log out sits at the very bottom of the page */
+.overview-logout {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-2);
+}
+.overview-logout .btn {
+  width: 100%;
+  max-width: 24rem;
 }
 
 /* Quick access */

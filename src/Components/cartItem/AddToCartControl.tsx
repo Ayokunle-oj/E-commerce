@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { Check, Minus, Plus, Trash2 } from "lucide-react";
 import type { Product } from "../../types/product";
 import { useCart } from "../../context/useCart";
+import { useAuth } from "../../auth/authContext";
 import "./addToCartControl.css";
 
 type FocusTarget = "add" | "minus" | "plus" | null;
@@ -14,6 +15,7 @@ interface AddToCartControlProps {
 // It reads the cart itself, so the card never has to know about it.
 function AddToCartControl({ product }: AddToCartControlProps) {
   const { items, addToCart, setQuantity, deleteItem } = useCart();
+  const { requireAuth } = useAuth();
   const quantity = items.find((i) => i.id === product.id)?.quantity ?? 0;
   const { id, name, stock } = product;
 
@@ -33,6 +35,7 @@ function AddToCartControl({ product }: AddToCartControlProps) {
   }, [quantity]);
 
   function handleAdd() {
+    if (!requireAuth("Sign in to add items to your cart.")) return;
     pendingFocus.current = stock > 1 ? "plus" : "minus";
     addToCart(product);
   }

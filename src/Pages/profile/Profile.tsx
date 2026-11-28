@@ -142,7 +142,7 @@ function Profile() {
     }
   }
 
-  function handlePhoto(event: ChangeEvent<HTMLInputElement>) {
+  async function handlePhoto(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     event.target.value = ""; // so choosing the same file again still fires
     if (!file) return;
@@ -160,8 +160,15 @@ function Profile() {
       });
       return;
     }
-    setAvatar(URL.createObjectURL(file));
-    setPhotoMessage({ tone: "success", text: "Profile photo updated." });
+    try {
+      await setAvatar(file);
+      setPhotoMessage({ tone: "success", text: "Profile photo updated." });
+    } catch {
+      setPhotoMessage({
+        tone: "error",
+        text: "We couldn’t save that photo. Please try again.",
+      });
+    }
   }
 
   return (
@@ -193,12 +200,19 @@ function Profile() {
                     variant="ghost"
                     size="sm"
                     icon={<Trash2 size={16} aria-hidden="true" />}
-                    onClick={() => {
-                      setAvatar(null);
-                      setPhotoMessage({
-                        tone: "success",
-                        text: "Profile photo removed.",
-                      });
+                    onClick={async () => {
+                      try {
+                        await setAvatar(null);
+                        setPhotoMessage({
+                          tone: "success",
+                          text: "Profile photo removed.",
+                        });
+                      } catch {
+                        setPhotoMessage({
+                          tone: "error",
+                          text: "We couldn’t remove the photo. Please try again.",
+                        });
+                      }
                     }}
                   >
                     Remove

@@ -41,12 +41,12 @@ function AccountLayout() {
       </div>
 
       <div className="account__content" ref={contentRef}>
-        {/* Remove this note when the account is connected to a real backend (AccountProvider). */}
+        {/* Remove this note when the account is connected to a real backend (src/demo/demoServer.ts). */}
         <p className="account__sample">
           <Info size={16} aria-hidden="true" />
           <span>
-            <strong>Sample data.</strong> This account is for preview; changes
-            aren&rsquo;t saved to a server.
+            <strong>Demo data.</strong> Changes are saved in this browser only,
+            not on a server.
           </span>
         </p>
         <Outlet />

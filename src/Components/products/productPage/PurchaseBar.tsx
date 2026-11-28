@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Check, Minus, Plus, Trash2 } from "lucide-react";
 import type { Product } from "../../../types/product";
 import { useCart } from "../../../context/useCart";
+import { useAuth } from "../../../auth/authContext";
 import { formatNaira } from "../../../Pages/cart/cartUtils";
 import "./purchaseBar.css";
 
@@ -18,6 +19,7 @@ interface PurchaseBarProps {
 // Same behaviour as the control on the product cards.
 function PurchaseBar({ product, placement }: PurchaseBarProps) {
   const { items, addToCart, setQuantity, deleteItem } = useCart();
+  const { requireAuth } = useAuth();
   const { id, name, price, stock } = product;
   const quantity = items.find((i) => i.id === id)?.quantity ?? 0;
   const soldOut = stock <= 0;
@@ -37,6 +39,7 @@ function PurchaseBar({ product, placement }: PurchaseBarProps) {
   }, [quantity]);
 
   function handleAdd() {
+    if (!requireAuth("Sign in to add items to your cart.")) return;
     pendingFocus.current = stock > 1 ? "plus" : "minus";
     addToCart(product);
   }
@@ -91,7 +94,11 @@ function PurchaseBar({ product, placement }: PurchaseBarProps) {
                 type="button"
                 ref={minusRef}
                 className="purchase-bar__step"
-                aria-label={quantity === 1 ? `Remove ${name} from cart` : "Decrease quantity"}
+                aria-label={
+                  quantity === 1
+                    ? `Remove ${name} from cart`
+                    : "Decrease quantity"
+                }
                 onClick={handleDecrease}
               >
                 {quantity === 1 ? (

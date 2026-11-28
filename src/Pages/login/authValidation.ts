@@ -54,3 +54,14 @@ export function passwordStrength(pw: string): { level: 0 | 1 | 2 | 3 | 4; label:
   const level = Math.max(1, Math.min(4, score)) as 1 | 2 | 3 | 4;
   return { level, label: ["", "Weak", "Fair", "Good", "Strong"][level] };
 }
+
+// First and last name are asked for separately on the sign-up page.
+export function checkNamePart(raw: string, which: "first" | "last"): string | null {
+  const v = raw.normalize("NFC").replace(/\s+/g, " ").trim();
+  if (!v) return `Enter your ${which} name.`;
+  if (!/^[\p{L}\p{M} '’.-]+$/u.test(v) || !/\p{L}/u.test(v)) {
+    return "Use letters, spaces, hyphens, apostrophes and full stops only.";
+  }
+  if (count(v) > 40) return "That name is too long.";
+  return null;
+}

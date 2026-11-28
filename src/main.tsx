@@ -9,6 +9,7 @@ import App from "./App";
 import ErrorBoundary from "./Components/errorBoundary/ErrorBoundary";
 import { ThemeProvider } from "./theme/ThemeProvider";
 import { CartProvider } from "./context/CartProvider";
+import { AuthProvider } from "./auth/AuthProvider";
 
 // The outer boundary is the last safety net: it catches crashes in the navbars,
 // the providers or the router itself, which the one inside App cannot reach.
@@ -17,9 +18,11 @@ createRoot(document.getElementById("root")!).render(
     <ErrorBoundary>
       <BrowserRouter>
         <ThemeProvider>
-          <CartProvider>
-            <App />
-          </CartProvider>
+          <AuthProvider>
+            <CartProvider>
+              <App />
+            </CartProvider>
+          </AuthProvider>
         </ThemeProvider>
       </BrowserRouter>
     </ErrorBoundary>
